@@ -1,0 +1,71 @@
+name: Bug
+description: 报告一个 bug
+labels:
+  - bug
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 现象
+      description: 一句话概括
+      placeholder: 抖音 URL 提交后 worker 卡在 pre_flight 状态
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: 严重程度
+      options:
+        - P0 系统不可用 / 数据损坏
+        - P1 关键功能失效
+        - P2 部分功能失效
+        - P3 体验问题
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤
+      description: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: 环境
+      description: |
+        - 提交版本 / commit SHA：
+        - Node 版本：
+        - 浏览器（如适用）：
+        - 平台 URL 类型：
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志 / 截图
+      description: 删除敏感信息（cookies、tokens、URL 中的 ID 等）
+    validations:
+      required: false
+  - type: textarea
+    id: root-cause
+    attributes:
+      label: 根因分析（修复时填写）
+      description: 修复 PR 关联时回填
+    validations:
+      required: false

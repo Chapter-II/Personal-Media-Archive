@@ -1,0 +1,55 @@
+name: 待决策 / Decision Needed
+description: 一个需要做出架构 / 技术选型决策的事项
+labels:
+  - decision
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 决策主题
+      placeholder: 是否引入 pgvector 做向量搜索（MVP3）
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 背景
+      description: 为什么这个决策现在需要做
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: 候选方案
+      description: |
+        ### A
+        - 优
+        - 劣
+
+        ### B
+        - 优
+        - 劣
+    validations:
+      required: true
+  - type: textarea
+    id: stakeholders
+    attributes:
+      label: 影响范围
+      description: 哪些模块 / 决策受牵连
+    validations:
+      required: false
+  - type: textarea
+    id: deadline
+    attributes:
+      label: 期望决策时间
+      description: 不决策的后果
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        决策做出后：
+        1. 在 docs/adr/ 写一份 ADR
+        2. 在本 issue 评论里链接 ADR
+        3. close issue

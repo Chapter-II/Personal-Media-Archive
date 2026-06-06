@@ -1,0 +1,73 @@
+name: 任务 / Task
+description: 创建一个开发任务（功能、改进、技术债）
+labels:
+  - task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        用于追踪开发任务。完成后通过 PR 描述里的 `Closes #N` 自动关闭。
+  - type: input
+    id: title
+    attributes:
+      label: 任务标题
+      description: 一句话描述，动词开头
+      placeholder: 接入 pg-boss 队列基础设施
+    validations:
+      required: true
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: 关联里程碑
+      options:
+        - M0 工程基建
+        - M1 后端骨架
+        - M2 Pre-flight + 录屏
+        - M3 并发与队列
+        - M4 Cookie Vault
+        - M5 浏览器扩展
+        - M6 Web UI 主界面
+        - M7 对象存储接入
+        - M8 部署与备份
+        - M9 端到端打磨
+        - MVP2
+        - MVP3
+        - 未规划
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 优先级
+      options:
+        - P0 阻塞当前里程碑
+        - P1 当前里程碑必做
+        - P2 后续里程碑
+        - P3 可选
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: 目标
+      description: 这个任务完成后能解决什么问题
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 验收标准
+      description: |
+        列出可验证的完成条件，例如：
+        - [ ] 提交 URL 后 30 秒内返回 item_id
+        - [ ] Worker 录制完成后 manifest 包含 sha256
+        - [ ] 通过 Vitest 覆盖率 ≥ 80%
+    validations:
+      required: true
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: 技术备注 / 依赖
+      description: 关联的 ADR、依赖任务、技术选型说明（可选）
+    validations:
+      required: false

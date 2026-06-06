@@ -1,0 +1,70 @@
+name: 风险 / Risk
+description: 记录一项风险、踩坑、隐患（暂不一定要修）
+labels:
+  - risk
+body:
+  - type: input
+    id: title
+    attributes:
+      label: 风险摘要
+      description: 一句话描述
+      placeholder: 国产 ROM 杀后台导致 Android 剪贴板监听服务被中止
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 风险类别
+      options:
+        - 安全
+        - 合规
+        - 性能
+        - 可用性
+        - 数据完整性
+        - 依赖 / 供应链
+        - 平台 / 第三方变更
+        - 运维
+    validations:
+      required: true
+  - type: dropdown
+    id: likelihood
+    attributes:
+      label: 发生概率
+      options:
+        - 高
+        - 中
+        - 低
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: 影响程度
+      options:
+        - 致命
+        - 严重
+        - 中等
+        - 轻微
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 详细描述
+      description: 包含触发条件、影响范围
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: 缓解措施 / 应对方案
+      description: 是否已缓解、如何避免再次发生
+    validations:
+      required: true
+  - type: textarea
+    id: detection
+    attributes:
+      label: 如何检测
+      description: 如果再次发生，如何尽早察觉
+    validations:
+      required: false

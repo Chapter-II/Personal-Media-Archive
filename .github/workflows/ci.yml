@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # M0 阶段：仅校验 commit message 与文档完整性
+  # M1 之后追加 typecheck / lint / test 等步骤
+  commitlint:
+    name: Lint commit messages
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install commitlint
+        run: |
+          npm install --no-save @commitlint/cli @commitlint/config-conventional
+      - name: Validate PR commits
+        run: |
+          npx commitlint \
+            --from ${{ github.event.pull_request.base.sha }} \
+            --to ${{ github.event.pull_request.head.sha }} \
+            --verbose
+
+  docs-check:
+    name: Docs sanity check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure required docs exist
+        run: |
+          for f in README.md ARCHITECTURE.md ROADMAP.md CONTRIBUTING.md CHANGELOG.md docs/adr/README.md; do
+            if [ ! -f "$f" ]; then
+              echo "Missing required doc: $f"
+              exit 1
+            fi
+          done
+      - name: Check ADR numbering
+        run: |
+          if ls docs/adr/[0-9][0-9][0-9][0-9]-*.md >/dev/null 2>&1; then
+            echo "ADR files found, OK"
+          else
+            echo "No ADR files match the 0000-name.md pattern"
+            exit 1
+          fi
+
+  # ===== 占位：M1 后启用 =====
+  # typecheck:
+  #   name: TypeScript typecheck
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: pnpm
+  #     - run: pnpm install --frozen-lockfile
+  #     - run: pnpm typecheck
+
+  # lint:
+  #   name: ESLint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: pnpm
+  #     - run: pnpm install --frozen-lockfile
+  #     - run: pnpm lint
+
+  # test:
+  #   name: Vitest
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     postgres:
+  #       image: postgres:16-alpine
+  #       env:
+  #         POSTGRES_PASSWORD: postgres
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+  #       ports:
+  #         - 5432:5432
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: pnpm/action-setup@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: pnpm
+  #     - run: pnpm install --frozen-lockfile
+  #     - run: pnpm test
+  #       env:
+  #         DATABASE_URL: postgres://postgres:postgres@localhost:5432/pma_test
