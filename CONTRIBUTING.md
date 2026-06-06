@@ -9,8 +9,8 @@
 ### 语言与运行时
 
 - TypeScript 严格模式（`strict: true`、`noUncheckedIndexedAccess: true`、`noImplicitAny: true`）
-- Node.js LTS（22.x）
-- pnpm 作为包管理器
+- Node.js LTS（22.x 或 24.x），当前开发环境为 24.14.0，版本固定在 `.node-version`
+- pnpm（通过 corepack 启用），版本固定在根 `package.json` 的 `packageManager` 字段
 
 ### 代码质量工具
 

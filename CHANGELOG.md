@@ -11,10 +11,13 @@
 - 项目工程文档体系（CONTRIBUTING / ARCHITECTURE / ROADMAP / ADR / Ops runbooks / GitHub 模板 / CI 占位工作流）
 - README 完整规划（数据模型、归档等级 L0-L2R、入口与客户端、最小架构、MVP 路线、合规边界）
 - 初始 ADR：技术栈、归档等级、抓取优先级、Cookie Vault 加密、ORM、队列、Auth、版本化、收藏夹模型
+- pnpm monorepo 骨架（M1.0）：根配置、`apps/` 与 `packages/` 工作空间、`@pma/shared` 占位包
+- 工程化工具链：TypeScript strict、ESLint 9 flat config + typed linting、Prettier 3、commitlint、lint-staged、Husky v9（pre-commit、commit-msg）
+- CI 正式启用 typecheck / lint / format 校验
 
 ### Changed
 
-- 无
+- CONTRIBUTING.md 的 Node 版本说明同步实际开发环境（24.14.0）
 
 ### Fixed
 

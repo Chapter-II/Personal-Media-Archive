@@ -1,0 +1,19 @@
+node_modules
+dist
+build
+.next
+out
+coverage
+pnpm-lock.yaml
+*.min.js
+*.min.css
+storage
+postgres-data
+
+# Documentation has its own formatting style; format manually
+docs/
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+ARCHITECTURE.md
+ROADMAP.md

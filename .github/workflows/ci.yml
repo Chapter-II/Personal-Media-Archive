@@ -59,33 +59,34 @@ jobs:
             exit 1
           fi
 
-  # ===== 占位：M1 后启用 =====
-  # typecheck:
-  #   name: TypeScript typecheck
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 22
-  #         cache: pnpm
-  #     - run: pnpm install --frozen-lockfile
-  #     - run: pnpm typecheck
+  typecheck:
+    name: TypeScript typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
 
-  # lint:
-  #   name: ESLint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: pnpm/action-setup@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 22
-  #         cache: pnpm
-  #     - run: pnpm install --frozen-lockfile
-  #     - run: pnpm lint
+  lint:
+    name: ESLint + Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm format:check
 
+  # ===== 占位：M1.1 起接入实际测试 =====
   # test:
   #   name: Vitest
   #   runs-on: ubuntu-latest
@@ -106,7 +107,7 @@ jobs:
   #     - uses: pnpm/action-setup@v4
   #     - uses: actions/setup-node@v4
   #       with:
-  #         node-version: 22
+  #         node-version-file: .node-version
   #         cache: pnpm
   #     - run: pnpm install --frozen-lockfile
   #     - run: pnpm test
