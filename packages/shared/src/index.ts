@@ -3,5 +3,5 @@
  * 本包是 M1.0 占位实现，后续 M1.1+ 起逐步填实。
  */
 
-export * from './error-codes.js';
-export * from './version.js';
+export * from './error-codes';
+export * from './version';

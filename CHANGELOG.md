@@ -14,6 +14,12 @@
 - pnpm monorepo 骨架（M1.0）：根配置、`apps/` 与 `packages/` 工作空间、`@pma/shared` 占位包
 - 工程化工具链：TypeScript strict、ESLint 9 flat config + typed linting、Prettier 3、commitlint、lint-staged、Husky v9（pre-commit、commit-msg）
 - CI 正式启用 typecheck / lint / format 校验
+- `@pma/db` Drizzle 数据层（M1.1）：10 张表 + 7 PG 枚举 + 检查约束 + 索引（含 partial index）
+- 表设计：users / sessions / api_tokens / collections / tags / items / item_tags / snapshots / assets / cookie_profiles
+- drizzle-kit 迁移工具链 + `db:migrate` 与 `db:seed` 脚本
+- 幂等 seed：预置 4 个默认收藏夹（Inbox / Read / Watch / Star）
+- Docker Compose：本地开发用 Postgres 16 服务，含 healthcheck
+- `.env.example` 与 `packages/db/.env.example` 文档化环境变量
 
 ### Changed
 

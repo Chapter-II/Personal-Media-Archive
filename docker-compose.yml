@@ -1,0 +1,25 @@
+name: pma
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pma-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-pma}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pma}
+      POSTGRES_DB: ${POSTGRES_DB:-pma_dev}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pma} -d ${POSTGRES_DB:-pma_dev}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
+    name: pma-postgres-data

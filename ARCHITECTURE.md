@@ -69,22 +69,26 @@ flowchart TB
 ## 模块边界
 
 ```text
-apps/
+apps/                 （M1.2 起填实）
   web/                Next.js 前端 + API（tRPC + REST 兼容端点）
   worker/             pg-boss worker 池
-  extension/          Chrome/Edge MV3 扩展（M5 起）
 
 packages/
-  db/                 Drizzle schema、迁移、查询
-  shared/             共享类型、tRPC router 定义、错误码、URL 解析器
-  capture/            采集逻辑（Playwright 控制、CDP 拦截、Pre-flight 侦察）
-  recording/          录制逻辑（Xvfb/PulseAudio/FFmpeg 编排）
-  storage/            StorageAdapter 接口 + LocalDiskAdapter + R2Adapter
-  vault/              Cookie Vault（AES-GCM 加密、注入）
-  search/             全文搜索（tsvector），未来扩展 pgvector
+  db/                 ✅ Drizzle schema、迁移、查询、seed（M1.1 已就位）
+  shared/             ✅ 错误码、版本常量（M1.0 占位，M1.3 起加 tRPC 路由签名）
+  capture/            （M2）Playwright 控制、CDP 拦截、Pre-flight 侦察
+  recording/          （M2）Xvfb/PulseAudio/FFmpeg 编排
+  storage/            （M2）StorageAdapter 接口 + LocalDiskAdapter + R2Adapter
+  vault/              （M4）Cookie Vault（AES-GCM 加密、注入）
+  search/             （MVP2）全文搜索（tsvector），扩展 pgvector
+
+extensions/           （M5）
+  chrome-edge/        Chrome/Edge MV3 扩展
 
 docs/                 ADR、ops runbook
 .github/              CI、Issue/PR 模板
+drizzle/              packages/db/drizzle 下的 SQL 迁移
+docker-compose.yml    本地开发 + 生产部署的服务编排
 ```
 
 **严禁跨模块**：`apps/web` 不直接 import `packages/capture`；走 tRPC + Job。`packages/recording` 不直接读写 DB；通过 `packages/db` 提供的 repository 接口。
