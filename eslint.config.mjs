@@ -13,6 +13,8 @@ export default tseslint.config(
       '**/coverage/**',
       '**/storage/**',
       '**/postgres-data/**',
+      // Next.js 自动维护，每次 next dev 都会改写
+      '**/next-env.d.ts',
       'pnpm-lock.yaml',
     ],
   },
@@ -25,7 +27,15 @@ export default tseslint.config(
       sourceType: 'module',
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['*.js', '*.mjs', '*.cjs'],
+          allowDefaultProject: [
+            // 根级 JS 配置文件
+            '*.js',
+            '*.mjs',
+            '*.cjs',
+            // 子包级 JS 配置文件（typescript-eslint 不允许 ** 通配符）
+            'apps/*/*.config.{js,mjs,cjs}',
+            'packages/*/*.config.{js,mjs,cjs}',
+          ],
           defaultProject: 'tsconfig.json',
         },
         tsconfigRootDir: import.meta.dirname,

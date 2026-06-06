@@ -69,9 +69,10 @@ flowchart TB
 ## 模块边界
 
 ```text
-apps/                 （M1.2 起填实）
-  web/                Next.js 前端 + API（tRPC + REST 兼容端点）
-  worker/             pg-boss worker 池
+apps/
+  web/                ✅ Next.js 15 + Tailwind v4 + Pino + 健康检查（M1.2 已就位，
+                      tRPC + Auth 在 M1.3，CRUD 在 M1.4）
+  worker/             （M2）pg-boss worker 池
 
 packages/
   db/                 ✅ Drizzle schema、迁移、查询、seed（M1.1 已就位）

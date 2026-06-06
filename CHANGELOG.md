@@ -20,6 +20,11 @@
 - 幂等 seed：预置 4 个默认收藏夹（Inbox / Read / Watch / Star）
 - Docker Compose：本地开发用 Postgres 16 服务，含 healthcheck
 - `.env.example` 与 `packages/db/.env.example` 文档化环境变量
+- `@pma/web` Next.js 15 应用骨架（M1.2）：App Router、TypeScript strict、Tailwind v4
+- 健康检查端点：`GET /healthz` 返回 schema 版本与 uptime；`GET /healthz/db` 跑 SELECT 1 校验连通
+- Pino 结构化日志，含 cookies / tokens / password 字段 redaction
+- 模块化共享：`packages/db` 重导出 `sql`/`eq`/`and` 等查询工具，apps 不直接依赖 drizzle-orm
+- 服务端单例 DB 客户端，dev 模式下用 globalThis 兜底防止 HMR 重连
 
 ### Changed
 
